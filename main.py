@@ -46,9 +46,18 @@ for category in japan_dataset:
             for _ in range(5):
                 audio_files.append(japanese_filename)
 
-# Combine all the audio files into a single file
-combine_audio_files(audio_files, "combined_audio.mp3")
+# Combine audio files set wise
+for category in japan_dataset:
+    for title, phrases in category.items():
+        set_audio_files = [f"{title}_title.mp3"]
+        for i in range(len(phrases)):
+            set_audio_files.append(f"{title}_english_{i}.mp3")
+            set_audio_files.extend([f"{title}_japanese_{i}.mp3"] * 5)
+        combine_audio_files(set_audio_files, f"{title}_combined.mp3")
 
+# Combine all the set-wise combined audio files into a single file
+set_combined_files = [f"{title}_combined.mp3" for category in japan_dataset for title in category.keys()]
+combine_audio_files(set_combined_files, "final_combined_audio.mp3")
 # Clean up individual audio files
 for file in set(audio_files):  # Use set to avoid deleting the same file multiple times
     os.remove(file)
