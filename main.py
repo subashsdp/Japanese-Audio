@@ -39,7 +39,8 @@ def process_dataset(dataset, dataset_name):
                     audio_files.append(english_filename)
                     
                     text_to_audio(phrase["Japanese"], 'ja', japanese_filename)
-                    audio_files.append(japanese_filename)
+                    for _ in range(5):
+                        audio_files.append(japanese_filename)
             except Exception as e:
                 errors.append(f"Error processing {title}: {e}")
 
